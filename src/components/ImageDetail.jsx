@@ -183,7 +183,7 @@ const ImageDetail = () => {
     )
   }
 
-  const imageUrl = `${API_BASE_URL}/${image.imagePath}`
+  const imageUrl = `${API_BASE_URL}/uploads/${image.imagePath}`
 
   return (
     <div className="max-w-6xl mx-auto">
