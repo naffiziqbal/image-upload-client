@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config";
 
 const ImageCard = ({ image }) => {
-  const imageUrl = `${API_BASE_URL}/${image.imagePath}`
+  console.log(image, "image");
+  const imageUrl = `${API_BASE_URL}/uploads/${image.imagePath}`;
 
   return (
     <div className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">

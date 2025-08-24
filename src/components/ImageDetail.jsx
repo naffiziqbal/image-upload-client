@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { GALLERY_API_BASE, API_BASE_URL } from '../config'
+import { GALLERY_API_BASE, API_BASE_URL, fetchOptions, uploadFetchOptions } from '../config'
 
 const ImageDetail = () => {
   const { id } = useParams()
@@ -28,7 +28,7 @@ const ImageDetail = () => {
   const fetchImage = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`${API_BASE}/${id}`)
+      const response = await fetch(`${API_BASE}/${id}`, fetchOptions)
       
       if (!response.ok) {
         if (response.status === 404) {
@@ -81,7 +81,8 @@ const ImageDetail = () => {
 
       const response = await fetch(`${API_BASE}/${id}`, {
         method: 'PUT',
-        body: formData
+        body: formData,
+        ...uploadFetchOptions
       })
 
       const data = await response.json()
@@ -115,7 +116,8 @@ const ImageDetail = () => {
 
     try {
       const response = await fetch(`${API_BASE}/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        ...fetchOptions
       })
 
       const data = await response.json()

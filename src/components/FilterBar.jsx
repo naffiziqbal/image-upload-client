@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { GALLERY_API_BASE } from '../config'
+import { GALLERY_API_BASE, fetchOptions } from '../config'
 
 const FilterBar = ({ filters, onFilterChange }) => {
   const [categories, setCategories] = useState([])
@@ -12,7 +12,7 @@ const FilterBar = ({ filters, onFilterChange }) => {
     // Fetch categories and tags
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${API_BASE}/categories`)
+        const response = await fetch(`${API_BASE}/categories`, fetchOptions)
         if (response.ok) {
           const data = await response.json()
           if (data.success) {
@@ -26,7 +26,7 @@ const FilterBar = ({ filters, onFilterChange }) => {
 
     const fetchTags = async () => {
       try {
-        const response = await fetch(`${API_BASE}/tags-list`)
+        const response = await fetch(`${API_BASE}/tags-list`, fetchOptions)
         if (response.ok) {
           const data = await response.json()
           if (data.success) {

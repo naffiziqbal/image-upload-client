@@ -1,77 +1,77 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import ImageCard from './ImageCard'
-import FilterBar from './FilterBar'
-import { GALLERY_API_BASE } from '../config'
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import ImageCard from "./ImageCard";
+import FilterBar from "./FilterBar";
+import { GALLERY_API_BASE, fetchOptions } from "../config";
 
 const Gallery = () => {
-  const [images, setImages] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 12,
     total: 0,
-    totalPages: 0
-  })
+    totalPages: 0,
+  });
   const [filters, setFilters] = useState({
-    category: '',
-    tags: '',
-    featured: '',
-    search: '',
-    sortBy: 'createdAt',
-    sortOrder: 'desc'
-  })
+    category: "",
+    tags: "",
+    featured: "",
+    search: "",
+    sortBy: "createdAt",
+    sortOrder: "desc",
+  });
 
-  const API_BASE = GALLERY_API_BASE
+  const API_BASE = GALLERY_API_BASE;
 
   const fetchImages = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const params = new URLSearchParams({
         page: pagination.page,
         limit: pagination.limit,
-        ...filters
-      })
+        ...filters,
+      });
 
-      const response = await fetch(`${API_BASE}?${params}`)
+      const response = await fetch(`${API_BASE}?${params}`, fetchOptions);
       if (!response.ok) {
-        throw new Error('Failed to fetch images')
+        throw new Error("Failed to fetch images");
       }
 
-      const data = await response.json()
+      const data = await response.json();
       if (data.success) {
-        setImages(data.data)
-        setPagination(data.pagination)
+        setImages(data.data);
+        setPagination(data.pagination);
       } else {
-        throw new Error(data.error || 'Failed to fetch images')
+        throw new Error(data.error || "Failed to fetch images");
       }
     } catch (err) {
-      setError(err.message)
+      setError(err.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchImages()
-  }, [pagination.page, filters])
+    fetchImages();
+  }, [pagination.page, filters]);
 
   const handleFilterChange = (newFilters) => {
-    setFilters(newFilters)
-    setPagination(prev => ({ ...prev, page: 1 }))
-  }
+    setFilters(newFilters);
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
 
   const handlePageChange = (newPage) => {
-    setPagination(prev => ({ ...prev, page: newPage }))
-  }
+    setPagination((prev) => ({ ...prev, page: newPage }));
+  };
 
   if (loading && images.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -85,7 +85,7 @@ const Gallery = () => {
           Try Again
         </button>
       </div>
-    )
+    );
   }
 
   return (
@@ -132,11 +132,11 @@ const Gallery = () => {
               >
                 Previous
               </button>
-              
+
               <span className="px-4 py-2 text-gray-600">
                 Page {pagination.page} of {pagination.totalPages}
               </span>
-              
+
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page === pagination.totalPages}
@@ -149,7 +149,7 @@ const Gallery = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Gallery
+export default Gallery;

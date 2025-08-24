@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GALLERY_API_BASE } from '../config'
+import { GALLERY_API_BASE, fetchOptions, uploadFetchOptions } from '../config'
 
 const Upload = () => {
   const navigate = useNavigate()
@@ -26,8 +26,8 @@ const Upload = () => {
     const fetchData = async () => {
       try {
         const [categoriesRes, tagsRes] = await Promise.all([
-          fetch(`${API_BASE}/categories`),
-          fetch(`${API_BASE}/tags-list`)
+          fetch(`${API_BASE}/categories`, fetchOptions),
+          fetch(`${API_BASE}/tags-list`, fetchOptions)
         ])
 
         if (categoriesRes.ok) {
@@ -121,7 +121,8 @@ const Upload = () => {
 
       const response = await fetch(API_BASE, {
         method: 'POST',
-        body: uploadData
+        body: uploadData,
+        ...uploadFetchOptions
       })
 
       const data = await response.json()
