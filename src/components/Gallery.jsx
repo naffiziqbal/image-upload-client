@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ImageCard from './ImageCard'
 import FilterBar from './FilterBar'
+import { GALLERY_API_BASE } from '../config'
 
 const Gallery = () => {
   const [images, setImages] = useState([])
@@ -22,7 +23,7 @@ const Gallery = () => {
     sortOrder: 'desc'
   })
 
-  const API_BASE = 'http://localhost:3000/api/v1/gallery'
+  const API_BASE = GALLERY_API_BASE
 
   const fetchImages = async () => {
     try {

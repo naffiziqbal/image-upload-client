@@ -3,7 +3,6 @@ import Navbar from './components/Navbar'
 import Gallery from './components/Gallery'
 import Upload from './components/Upload'
 import ImageDetail from './components/ImageDetail'
-import './App.css'
 
 function App() {
   return (
